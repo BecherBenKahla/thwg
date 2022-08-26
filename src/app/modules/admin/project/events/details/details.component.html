@@ -1,0 +1,437 @@
+<body>
+    <div class="super_container">
+        <!-- Home -->
+        <div class="home">
+            <img class="home_background parallax-window" data-parallax="scroll"
+                src="https://wallpaperaccess.com/full/1217775.jpg">
+            <div class="home_content">
+                <div class="home_title">{{product.title}}</div>
+            </div>
+        </div>
+        <mat-tab-group dynamicHeight>
+            <mat-tab label="Event Details">
+                <div class="listing">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="single_listing">
+                                    <div class="hotel_info">
+                                        <div class="hotel_title_container d-flex flex-lg-row flex-column">
+                                            <div class="hotel_title_content ">
+                                                <h1 class="hotel_title">{{product.title}}</h1>
+                                               
+                                                <div class="hotel_location">Tunisie</div>
+                                                <div class="hotel_location">{{product.type}}</div>
+                                                <div *ngIf="isLoggedIn ;else No_login">
+                                                    <div *ngIf="OneOfPartcipants == false"
+                                                        class="hotel_title_button ml-lg-auto text-lg-right justify-content-lg-end">
+                                                        <div class="button book_button trans_200  " style="  justify-content: end;
+                                                 "><a [routerLink]="['/events/payment/', product.id]">book
+                                                                Now<span></span><span></span><span></span></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <ng-template #No_login>
+                                                    <div
+                                                        class="hotel_title_button ml-lg-auto text-lg-right justify-content-lg-end">
+                                                        <div class="button book_button trans_200  " style="  justify-content: end;
+                                                "><a [routerLink]="['/events/auth']">book
+                                                                Now<span></span><span></span><span></span></a>
+                                                        </div>
+                                                    </div>
+                                                </ng-template>
+                                            </div>
+                                            <div class="user" *ngIf="product.organizer != null">
+
+                                                <img class="smith "
+                                                    src="data:image/jpg;base64,{{product.organizer.picture.data}}"
+                                                    alt="Ash" />
+                                                <div class="username">{{product.organizer.username}}</div>
+                                                <div class="bio">
+                                                    {{product.organizer.email}}
+                                                </div>
+                                                <div class="description ">
+                                                    Hope to see you soon
+                                                    <div class="hotel_map_link"
+                                                        [routerLink]="['/events/carduser/',product.organizer.id]">See
+                                                        profile</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Listing Image -->
+                                        <div class="hotel_image">
+                                            <img *ngIf="product.image !=null" src="{{product.image}}" alt="">
+                                            <div
+                                                class="hotel_review_container d-flex flex-column align-items-center justify-content-center">
+                                                <div class="hotel_review">
+                                                    <div class="hotel_review_content">
+                                                        <div class="hotel_review_title">
+                                                            {{(this.rating| number : '1.0-0')| i18nPlural: {
+                                                                '=1'   : 'very poor',
+                                                                '=2'   : 'very poor',
+                                                                '=3'   : 'Fair',
+                                                                '=4'   : 'Fair',
+                                                                '=5'   : 'Average',
+                                                                '=6'   : 'Average',
+                                                                '=7'   : 'Cood',
+                                                                '=8'   : 'Good',
+                                                                '=9'   : 'Excellent',
+                                                                '=10'   : 'Excellent'
+
+
+                                               } }}
+                                                        </div>
+                                                        <div class="hotel_review_subtitle" *ngIf="feedbacks !=null">{{feedbacks.length}} reviews</div>
+                                                    </div>
+                                                    <div class="hotel_review_rating text-center">{{this.rating | number : '1.0-0'}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="hotel_gallery">
+                                            <div class="hotel_slider_container">
+                                                <ng-container *ngIf="product.pics!=null">
+                                                    <mat-carousel timings="250ms ease-in" [autoplay]="true"
+                                                        interval="5000" color="accent" maxWidth="auto" proportion="50"
+                                                        slides="5" [loop]="true" [hideArrows]="false"
+                                                        [hideIndicators]="true" [useKeyboard]="true"
+                                                        [useMouseWheel]="false" orientation="ltr">
+                                                        <mat-carousel-slide #matCarouselSlide
+                                                            *ngFor="let slide of product.pics; let i = index"
+                                                            image="data:image/jpg;base64,{{slide.data}}"
+                                                            overlayColor="#00000040" [hideOverlay]="false">
+                                                        </mat-carousel-slide>
+                                                    </mat-carousel>
+                                                    <ng-container *ngIf="product.pics==null">
+                                                        <mat-carousel timings="250ms ease-in" [autoplay]="true"
+                                                            interval="5000" color="accent" maxWidth="auto"
+                                                            proportion="50" slides="5" [loop]="true"
+                                                            [hideArrows]="false" [hideIndicators]="true"
+                                                            [useKeyboard]="true" [useMouseWheel]="false"
+                                                            orientation="ltr">
+                                                            <mat-carousel-slide #matCarouselSlide image="product.image"
+                                                                overlayColor="#00000040" [hideOverlay]="false">
+                                                            </mat-carousel-slide>
+                                                        </mat-carousel>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                        <div class="hotel_info_text">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu
+                                                convallis
+                                                tortor. Suspendisse potenti. In faucibus massa. Lorem ipsum dolor sit
+                                                amet,
+                                                consectetur adipiscing elit. Nullam eu convallis tortor. Lorem ipsum
+                                                dolor sit
+                                                amet, consectetur adipiscing elit. Vivamus quis vulputate eros, iaculis
+                                                consequat nisl. Nunc et suscipit urna. Integer elementum orci eu
+                                                vehicula
+                                                pretium. Donec bibendum tristique condimentum. Aenean in lacus ligula.
+                                                Phasellus
+                                                euismod gravida eros. Aenean nec ipsum aliquet, pharetra magna id,
+                                                interdum
+                                                sapien. Etiam id lorem eu nisl pellentesque semper. Nullam tincidunt
+                                                metus
+                                                placerat, suscipit leo ut, tempus nulla. Fusce at eleifend tellus. Ut
+                                                eleifend
+                                                dui nunc, non fermentum quam placerat non. Etiam venenatis nibh augue,
+                                                sed
+                                                eleifend justo tristique eu</p>
+                                        </div>
+                                        <div class="hotel_info_tags">
+                                            <ul class="hotel_icons_list">
+                                                <li class="hotel_icons_item"><img src="" alt=""></li>
+                                                <li class="hotel_icons_item"><img src="" alt=""></li>
+                                                <li class="hotel_icons_item"><img src="" alt=""></li>
+                                                <li class="hotel_icons_item"><img src="" alt=""></li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                    <div class="reviews">
+                                        <div class="reviews_title">reviews</div>
+                                        <div class="reviews_container" *ngFor="let feedback of feedbacks">
+                                            <div class="review">
+                                                <div class="row">
+                                                    <div class="col-lg-1">
+                                                        <div class="review_image">
+                                                            <img *ngIf="feedback.user.picture!=null" src="data:image/jpg;base64,{{feedback.user.picture.data}}"
+                                                                alt="https://unsplash.com/@saaout">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-11">
+                                                        <div class="review_content">
+                                                            <div class="review_title_container">
+                                                                <div class="review_title"></div>
+                                                                <div class="review_rating">{{feedback.stars}}</div>
+                                                            </div>
+                                                            <div class="review_text">
+                                                                <p>{{feedback.message}}.</p>
+                                                            </div>
+                                                            <div class="review_name">{{feedback.user.username}}</div>
+                                                            <div class="review_date">{{feedback.localTime | date:  'longDate'}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                          
+                                        </div>
+                                       
+
+                                                <div class="hotel_map_link " style="  margin-left: 40%;
+                                                margin-top: 10%;
+"
+                                                (click)="addFeedback()">Add feedback</div>
+                                    </div>
+                                    <div class="location_on_map">
+                                        <div class="location_on_map_title">location on map</div>
+                                        <div class="travelix_map">
+                                            <div id="google_map" class="google_map">
+                                                <div class="map_container">
+                                                    <div id="map">
+                                                        <agm-map *ngIf="product.place!=null"
+                                                            [latitude]="product.place.latitude"
+                                                            [longitude]="product.place.longitude"
+                                                            [disableDefaultUI]="false" [zoom]="13">
+                                                            <agm-marker *ngFor="let a of markers; let b = index"
+                                                                [latitude]="product.place.latitude"
+                                                                [longitude]="product.place.longitude"
+                                                                [label]="product.title">
+                                                                <agm-info-window>
+                                                                    <strong>Info Window! This is a random
+                                                                        location</strong>
+                                                                </agm-info-window>
+                                                            </agm-marker>
+                                                        </agm-map>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="rooms">
+                                        <div class="reviews_title text-center">You may like</div>
+                                        <div class="room" *ngFor="let i of recommendedEvents2; let index = index">
+                                            <div class="row" >
+                                                <div class="col-lg-2">
+                                                    <div class="room_image" *ngIf="i.pics== null"><img src="{{i.image}}"
+                                                            alt="https://unsplash.com/@grovemade"></div>
+                                                    <div class="room_image" *ngIf="i.pics!= null"><img
+                                                            src="data:image/jpg;base64,{{i.pics.data}}"
+                                                            alt="https://unsplash.com/@grovemade"></div>
+                                                </div>
+                                                <div class="col-lg-7" *ngIf="i.pics== null">
+                                                    <div class="room_content">
+                                                        <div class="room_title">{{i.title}}</div>
+                                                        <div class="room_price">{{i.price}}/person</div>
+                                                        <div class="room_text">{{i.type}}</div>
+                                                        <div class="room_extra"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-7" *ngIf="i.pics!= null">
+                                                    <div class="room_content">
+                                                        <div class="room_title">{{i.title}}</div>
+                                                        <div class="room_price">{{i.prices}} DT /person</div>
+                                                        <div class="room_text"></div>
+                                                        <div class="room_extra"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 text-lg-right">
+                                                    <div class="room_button">
+                                                        <div class="button book_button trans_200" *ngIf="i.pics== null">
+                                                            <a
+                                                                href="{{i.link}}">book<span></span><span></span><span></span></a>
+                                                        </div>
+                                                        <div class="button book_button trans_200" *ngIf="i.pics!= null">
+                                                            <a [routerLink]="['/events/', i.id]">
+                                                                >book<span></span><span></span><span></span></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab *ngIf="(OneOfPartcipants || organizer)" label="Chat">
+                <app-chat></app-chat>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 footer_column">
+                    <div class="footer_col">
+                        <div class="footer_content footer_about">
+                        </div>
+                        <p class="footer_about_text">
+                            <div class="logo_container footer_logo">
+                                <div class="logo"><a href="#"><img
+                                            src="../../../../../../assets//images/mountain-removebg-preview.png"
+                                            alt=""></a>
+                                </div>
+                                <ul class="footer_social_list">
+                                    <li class="footer_social_item"><a href="#">
+                                            <mat-icon class="icon-size-5" style="color: white;"
+                                                [svgIcon]="'feather:facebook'"></mat-icon>
+                                        </a></li>
+                                    <li class="footer_social_item"><a href="#">
+                                            <mat-icon class="icon-size-5" style="color: white;"
+                                                [svgIcon]="'feather:instagram'"></mat-icon>
+                                        </a>
+                                    </li>
+                                    <li class="footer_social_item"><a href="#">
+                                            <mat-icon class="icon-size-5" style="color: white;"
+                                                [svgIcon]="'feather:twitter'"></mat-icon>
+                                        </a>
+                                    </li>
+                                    <li class="footer_social_item"><a href="#">
+                                            <mat-icon class="icon-size-5" style="color: white;"
+                                                [svgIcon]="'feather:youtube'"></mat-icon>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 footer_column">
+                    <div class="footer_col">
+                        <div class="footer_title">blog posts</div>
+                        <div class="footer_content footer_blog">
+                            <div class="footer_blog_item clearfix">
+                                <div class="footer_blog_image"><img src="" alt="https://unsplash.com/@avidenov"></div>
+                                <div class="footer_blog_content">
+                                    <div class="footer_blog_title"><a href="blog.html">Travel with us this
+                                            year</a>
+                                    </div>
+                                    <div class="footer_blog_date">Nov 29, 2017</div>
+                                </div>
+                            </div>
+                            <div class="footer_blog_item clearfix">
+                                <div class="footer_blog_image"><img src="" alt="https://unsplash.com/@deannaritchie">
+                                </div>
+                                <div class="footer_blog_content">
+                                    <div class="footer_blog_title"><a href="blog.html">New destinations for
+                                            you</a>
+                                    </div>
+                                    <div class="footer_blog_date">Nov 29, 2017</div>
+                                </div>
+                            </div>
+                            <div class="footer_blog_item clearfix">
+                                <div class="footer_blog_image"><img src="" alt="https://unsplash.com/@bergeryap87">
+                                </div>
+                                <div class="footer_blog_content">
+                                    <div class="footer_blog_title"><a href="blog.html">Travel with us this
+                                            year</a>
+                                    </div>
+                                    <div class="footer_blog_date">Nov 29, 2017</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 footer_column">
+                    <div class="footer_col">
+                        <div class="footer_title">tags</div>
+                        <div class="footer_content footer_tags">
+                            <ul class="tags_list clearfix">
+                                <li class="tag_item"><a href="#">music</a></li>
+                                <li class="tag_item"><a href="#">video</a></li>
+                                <li class="tag_item"><a href="#">party</a></li>
+                                <li class="tag_item"><a href="#">photography</a></li>
+                                <li class="tag_item"><a href="#">adventure</a></li>
+                                <li class="tag_item"><a href="#">camping</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 footer_column">
+                    <div class="footer_col">
+                        <div class="footer_title">contact info</div>
+                        <div class="footer_content footer_contact">
+                            <ul class="contact_info_list">
+                                <li class="contact_info_item d-flex flex-row">
+                                    <div>
+                                        <div class="contact_info_icon"><img src="" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="contact_info_text">Avenue de la république (Immeuble Mezri Jaaîm)
+                                        Akouda, Sousse 4022
+                                    </div>
+                                </li>
+                                <li class="contact_info_item d-flex flex-row">
+                                    <div>
+                                        <div class="contact_info_icon"><img src="" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="contact_info_text">+216 55394739</div>
+                                </li>
+                                <li class="contact_info_item d-flex flex-row">
+                                    <div>
+                                        <div class="contact_info_icon"><img src="" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="contact_info_text"><a href="mailto:contactme@gmail.com?Subject=Hello"
+                                            target="_top">takwa.benabdessalem@eniso.u-sousse.tn</a></div>
+                                </li>
+                                <li class="contact_info_item d-flex flex-row">
+                                    <div>
+                                        <div class="c          RouterModule
+                                        ontact_info_icon"><img src="" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="contact_info_text"><a
+                                            href="https://tunisia_here_we_go.com">www.tunisia_here_we_go.tn</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+    <div class="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 order-lg-1 order-2  ">
+                    <div class="copyright_content d-flex flex-row align-items-center">
+                        <div>
+                            Copyright &copy;<script>
+                                document.write(new Date().getFullYear());
+                            </script> All rights reserved | This plateform is made with <i class="fa fa-heart-o"
+                                aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 order-lg-2 order-1">
+                    <div class="footer_nav_container d-flex flex-row align-items-center justify-content-lg-end">
+                        <div class="footer_nav">
+                            <ul class="footer_nav_list">
+                                <li class="footer_nav_item"><a href="index.html">home</a></li>
+                                <li class="footer_nav_item"><a href="about.html">about us</a></li>
+                                <li class="footer_nav_item"><a href="offers.html">offers</a></li>
+                                <li class="footer_nav_item"><a href="blog.html">news</a></li>
+                                <li class="footer_nav_item"><a href="contact.html">contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../../../assets/styles/styles2/bootstrap4/popper.js"></script>
+    <script src="../../../../../../assets/styles/styles2/bootstrap4/bootstrap.min.js"></script>
+    <script src="../../../../../../assets/plugins/easing/easing.js"></script>
+    <script src="../../../../../../assets/plugins/parallax-js-master/parallax.min.js"></script>
+    <script src="../../../../../../assets/plugins/colorbox/jquery.colorbox-min.js"></script>
+    <script src="../../../../../../assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCIwF204lFZg1y4kPSIhKaHEXMLYxxuMhA"></script>
+</body>

@@ -1,0 +1,47 @@
+agm-map {
+  height: 500px;
+  width: 100%;
+}
+
+.location {
+    agm-map {
+    height: 600px;
+    width: 600px;
+  }
+  
+  .container {
+    padding: 1rem;
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+}@import "src/@fuse/scss/fuse";
+
+
+form.checkout {
+    max-width: 20000px;
+    margin: 2rem auto;
+    text-align: center;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    padding: 1rem 2rem;
+    background: white;
+  
+    font-family: monospace;
+    color: #525252;
+    font-size: 1.1rem;
+  }
+  
+  form.checkout button {
+    padding: 0.5rem 1rem;
+    color: white;
+    background: coral;
+    border: none;
+    border-radius: 4px;
+    margin-top: 1rem;
+  }
+  
+  form.checkout button:active {
+    background: rgb(165, 76, 43);
+  }
